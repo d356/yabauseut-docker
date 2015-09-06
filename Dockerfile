@@ -1,7 +1,8 @@
 FROM d356/sh2-gcc-docker
 ENV compiler=/carl9170fw/toolchain/inst/bin/sh-elf-gcc root_path=/carl9170fw/toolchain/inst/bin/ toolchain_file=/yabause/yabauseut/Platform/SegaSaturn
-RUN git clone https://github.com/d356/yabause.git ; \
-    git clone https://github.com/d356/iapetus.git
+RUN git clone https://github.com/d356/iapetus.git
+
+COPY yabause yabause
 
 # compile iapetus
 RUN cd iapetus ; \
@@ -13,7 +14,6 @@ RUN cd iapetus ; \
 
 #compile yabauseut
 RUN cd yabause ; \ 
-    git checkout cpp-fix-2 ; \
     mkdir yabauseut/build ; \
     cd yabauseut/build ; \
     cmake .. -DCMAKE_TOOLCHAIN_FILE=${toolchain_file} -DWANT_AUTOMATED_TESTING=ON -DCMAKE_C_COMPILER=${compiler}  -DCMAKE_FIND_ROOT_PATH=${root_path} -DIAPETUS_ROOT_PATH=/iapetus -DIAPETUS_INCLUDE_DIR=/iapetus/src -DIAPETUS_LIB=/iapetus/build/src/libiapetus.a ; \
