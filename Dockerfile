@@ -1,10 +1,10 @@
 FROM d356/sh2-gcc-docker
-ENV compiler=/carl9170fw/toolchain/inst/bin/sh-elf-gcc root_path=/carl9170fw/toolchain/inst/bin/ toolchain_file=/carl9170fw/yabause/yabauseut/Platform/SegaSaturn
-RUN git clone https://github.com/d356/yabause.git ; git clone https://github.com/d356/iapetus.git
+ENV compiler=/carl9170fw/toolchain/inst/bin/sh-elf-gcc root_path=/carl9170fw/toolchain/inst/bin/ toolchain_file=/yabause/yabauseut/Platform/SegaSaturn
+RUN git clone https://github.com/d356/yabause.git ; \
+    git clone https://github.com/d356/iapetus.git
 
 # compile iapetus
 RUN cd iapetus ; \
-    git pull ; \
     git checkout cpp-fix ; \
     mkdir build ; \
     cd build ; \
@@ -13,11 +13,10 @@ RUN cd iapetus ; \
 
 #compile yabauseut
 RUN cd yabause ; \ 
-    git pull ; git pull ; git pull ;\
     git checkout cpp-fix-2 ; \
     mkdir yabauseut/build ; \
     cd yabauseut/build ; \
-    cmake .. -DCMAKE_TOOLCHAIN_FILE=${toolchain_file} -DWANT_AUTOMATED_TESTING=ON -DCMAKE_C_COMPILER=${compiler}  -DCMAKE_FIND_ROOT_PATH=${root_path} -DIAPETUS_ROOT_PATH=/carl9170fw/iapetus -DIAPETUS_INCLUDE_DIR=/carl9170fw/iapetus/src -DIAPETUS_LIB=/carl9170fw/iapetus/build/src/libiapetus.a ; \
+    cmake .. -DCMAKE_TOOLCHAIN_FILE=${toolchain_file} -DWANT_AUTOMATED_TESTING=ON -DCMAKE_C_COMPILER=${compiler}  -DCMAKE_FIND_ROOT_PATH=${root_path} -DIAPETUS_ROOT_PATH=/iapetus -DIAPETUS_INCLUDE_DIR=/iapetus/src -DIAPETUS_LIB=/iapetus/build/src/libiapetus.a ; \
     make
 
 #compile yabause-runner
@@ -29,6 +28,6 @@ RUN cd yabause/yabause/src/runner ; \
     make 
     
 #run tests
-RUN cd /carl9170fw/yabause/yabause/src/runner/build ; \ 
+RUN cd /yabause/yabause/src/runner/build ; \ 
     git clone git://github.com/d356/yabauseut-bin.git ; \
-    runner/yabause /carl9170fw/yabause/yabauseut/build/src/YabauseUT.elf yabauseut-bin/vdp2_screenshots/ yabauseut-bin/vdp1_framebuffers/
+    runner/yabause /yabause/yabauseut/build/src/YabauseUT.elf yabauseut-bin/vdp2_screenshots/ yabauseut-bin/vdp1_framebuffers/
