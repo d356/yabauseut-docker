@@ -30,4 +30,4 @@ RUN cd yabause/yabause/src/runner ; \
 #run tests
 RUN cd /yabause/yabause/src/runner/build ; \ 
     git clone git://github.com/d356/yabauseut-bin.git ; \
-    runner/yabause /yabause/yabauseut/build/src/YabauseUT.elf yabauseut-bin/vdp2_screenshots/ yabauseut-bin/vdp1_framebuffers/
+    runner/yabause yabauseut check /yabause/yabauseut/build/src/YabauseUT.elf yabauseut-bin/vdp2_screenshots/ yabauseut-bin/vdp1_framebuffers/
