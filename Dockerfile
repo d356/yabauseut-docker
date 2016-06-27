@@ -1,12 +1,11 @@
 FROM d356/sh2-gcc-docker
 ENV compiler=/carl9170fw/toolchain/inst/bin/sh-elf-gcc root_path=/carl9170fw/toolchain/inst/bin/ toolchain_file=/yabause/yabauseut/Platform/SegaSaturn
-RUN git clone https://github.com/d356/iapetus.git
+RUN git clone https://github.com/cyberwarriorx/iapetus.git
 
 COPY yabause yabause
 
 # compile iapetus
 RUN cd iapetus ; \
-    git checkout cpp-fix ; \
     mkdir build ; \
     cd build ; \
     cmake .. -DCMAKE_TOOLCHAIN_FILE=${toolchain_file} -DCMAKE_C_COMPILER=${compiler} -DCMAKE_FIND_ROOT_PATH=${root_path} ; \
